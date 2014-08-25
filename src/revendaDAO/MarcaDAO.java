@@ -14,10 +14,17 @@ import revendaModel.Marca;
  * @author Faculdade
  */
 public class MarcaDAO {
+    
+    //ArrayList<Marcas> marcas = new ArrayList<>();
 
     public ArrayList<Marca> retornarTodas() {
       
         return new ArrayList<>();
+    }
+    
+    
+    
+    
     }
     
 }

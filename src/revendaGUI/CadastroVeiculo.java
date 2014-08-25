@@ -7,6 +7,7 @@ package revendaGUI;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
+import revendaController.VeiculoController;
 import revendaDAO.VeiculoDAO;
 import revendaModel.Carro;
 import revendaModel.Marca;
@@ -24,7 +25,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
     /**
      * Creates new form CadastroVeiculo
      */
-    public CadastroVeiculo(JFrame pai) {
+    public CadastroVeiculo(JFrame pai, VeiculoController veiculoController) {
         this.pai = pai;
         initComponents();        
         pnlMoto.setVisible(false);
@@ -293,34 +294,19 @@ public class CadastroVeiculo extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-        
-        //VeiculoControle v = new VeiculoControle();
-       // v.cadastrarVeiculo((int) cmbNumPortas.getSelectedItem(),txtOpcionais.getText() )
        
-        Veiculo veiculo;
-
+       VeiculoController v = new VeiculoController();
+        int tipo;
         if (rbCarro.isSelected()) {
-            Carro c1 = new Carro();
-            veiculo = c1;
-            c1.setNumPortas((int) cmbNumPortas.getSelectedItem());
-            c1.setOpcionais(txtOpcionais.getText());
-            veiculo.setTipo(1);
+            tipo = 1;
         } else {
-            Moto m1 = new Moto();
-            veiculo = m1;
-            m1.setCilindradas((int) cmbCilindradas.getSelectedItem());
-            m1.setEstilo(txtEstilo.getText());
-            veiculo.setTipo(2);
+            tipo = 2;
         }
-        
-        veiculo.setMarca((Marca)cmbMarca.getSelectedItem());
-        veiculo.setModelo((Modelo)cmbModelo.getSelectedItem());
-        veiculo.setPreco(Float.parseFloat(txtPreco.getText()));
-        veiculo.setAno(Integer.parseInt(txtAno.getText()));
-        veiculo.setDisponivel(ckbDisponivel.isSelected());
-        
-        VeiculoDAO.salvar(veiculo);  
-
+       v.cadastrarVeiculo((int) tipo , (int) cmbNumPortas.getSelectedItem(),txtOpcionais.getText(), 
+               (int) cmbCilindradas.getSelectedItem(), txtEstilo.getText(), 
+               cmbMarca.getSelectedItem(), cmbModelo.getSelectedItem(), Float.parseFloat(txtPreco.getText()), 
+               Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
+       
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void rbCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCarroActionPerformed

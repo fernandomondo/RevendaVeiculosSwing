@@ -33,7 +33,7 @@ public class Marca {
     
     @Override
     public String toString(){
-        return "Código da marca: " + String.valueOf(codigo) + " " + "Nome da marca: " + nome;
+        return nome;
     }
     
 }
