@@ -7,7 +7,7 @@ package revendaGUI;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
-import revendaDAO.veiculoDAO;
+import revendaDAO.VeiculoDAO;
 import revendaModel.Carro;
 import revendaModel.Marca;
 import revendaModel.Modelo;
@@ -319,7 +319,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
         veiculo.setAno(Integer.parseInt(txtAno.getText()));
         veiculo.setDisponivel(ckbDisponivel.isSelected());
         
-        veiculoDAO.salvar(veiculo);  
+        VeiculoDAO.salvar(veiculo);  
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
