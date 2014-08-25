@@ -12,7 +12,7 @@ import revendaModel.Veiculo;
  *
  * @author Faculdade
  */
-public class VeiculoDAO {
+public class VeiculoDAO {//fui
 
     public static void salvar(Veiculo veiculo) {
         // veiculo.setCodigo(codigoVeiculo++);
