@@ -6,6 +6,8 @@
 package revendaController;
 
 import java.util.ArrayList;
+import revendaDAO.MarcaDAO;
+import revendaDAO.ModeloDAO;
 import revendaDAO.VeiculoDAO;
 import revendaModel.Carro;
 import revendaModel.Marca;
@@ -20,53 +22,63 @@ import revendaModel.Veiculo;
 public class VeiculoController {
 
     private final VeiculoDAO veiculoDao;
+    private MarcaDAO marcaDAO;
+    private final ModeloDAO modeloDAO;
 
-    public VeiculoController(VeiculoDAO veiculoDao) {
+    public VeiculoController(VeiculoDAO veiculoDao, MarcaDAO marcaDAO, ModeloDAO modeloDAO) {
         this.veiculoDao = veiculoDao;
+        this.marcaDAO = marcaDAO;
+        this.modeloDAO = modeloDAO;
     }
 
-    public VeiculoController() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void cadastrarCarro(int numPortas, String opcionais, String marca, String modelo, Float preco, int ano, Boolean disponivel) {
+        Carro c1 = new Carro();
+        c1.setNumPortas(numPortas);
+        c1.setOpcionais(opcionais);
+        c1.setTipo(1);
+        terminarDecadastrarVeiculo(c1, ano, marca, modelo, preco, disponivel);
     }
 
-    /**
-     *
-     * @param tipo
-     * @param marca
-     * @param modelo
-     */
-    public void cadastrarVeiculo(int tipo, int numPortas, String opcionais, int cilindradas, String estilo, String marca, String modelo, Float preco, int ano, Boolean disponivel) {
-        Veiculo veiculo;
+    public void cadastrarMoto(String estilo, int cilindradas, String marca, String modelo, Float preco, int ano, Boolean disponivel) {
+        Moto m1 = new Moto();
+        m1.setCilindradas(cilindradas);
+        m1.setEstilo(estilo);
+        m1.setTipo(2);
+        terminarDecadastrarVeiculo(m1, ano, marca, modelo, preco, disponivel);
+    }
 
-        if (tipo == 1) {
-            Carro c1 = new Carro();
-            veiculo = c1;
-            c1.setNumPortas(numPortas);
-            c1.setOpcionais(opcionais);
-            veiculo.setTipo(tipo);
-        } else {
-            Moto m1 = new Moto();
-            veiculo = m1;
-            m1.setCilindradas(cilindradas);
-            m1.setEstilo(estilo);
-            veiculo.setTipo(tipo);
-        }
+    private void terminarDecadastrarVeiculo(Veiculo veiculo, int ano, String marca, String modelo, Float preco, Boolean disponivel) {
 
-        veiculo.setMarca(marca);
-        veiculo.setModelo(modelo);
+        Marca m = marcaDAO.retornarPorNome(marca);
+        veiculo.setMarca(m);
+
+        Modelo mo = modeloDAO.retornarPorNome(modelo);
+
+        veiculo.setModelo(mo);
         veiculo.setPreco(preco);
         veiculo.setAno(ano);
         veiculo.setDisponivel(disponivel);
 
         VeiculoDAO.salvar(veiculo);
+    }
 
+    public ArrayList<String> retornarNomeDasMarcas() {
+
+        ArrayList<String> todasMarcas = new ArrayList<>();
+
+        for (Marca marca : marcaDAO.retornarTodas()) {
+            todasMarcas.add(marca.getNome());
+        }
+        return todasMarcas;
     }
     
-    public ArrayList<String> retornarMarcasPorNome(){
-    
-    ArrayList<String> todasMarcas = new ArrayList<>();
-        for (Marca marca : marcas) {
-            todasMarcas.add(marca.getNome());
-            return todasMarcas;
+     public ArrayList<String> retornarNomeDosModelos() {
+
+        ArrayList<String> todosModelos = new ArrayList<>();
+
+        for (Modelo modelo : modeloDAO.retornarTodos()) {
+            todosModelos.add(modelo.getNome());
         }
+        return todosModelos;
+    }
 }

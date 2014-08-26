@@ -7,6 +7,7 @@ package revendaGUI;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import revendaController.VeiculoController;
 import revendaDAO.VeiculoDAO;
 import revendaModel.Carro;
@@ -20,29 +21,32 @@ import revendaModel.Veiculo;
  * @author Faculdade
  */
 public class CadastroVeiculo extends javax.swing.JFrame {
+
     private final JFrame pai;
+    private final VeiculoController veiculoController;
 
     /**
      * Creates new form CadastroVeiculo
      */
     public CadastroVeiculo(JFrame pai, VeiculoController veiculoController) {
         this.pai = pai;
-        initComponents();        
+        initComponents();
         pnlMoto.setVisible(false);
-        
+
         revendaDAO.MarcaDAO marcaDAO = new revendaDAO.MarcaDAO();
         cmbMarca.removeAllItems();
-        
+
         for (Marca m : marcaDAO.retornarTodas()) {
             cmbMarca.addItem(m);
         }
-        
+
         revendaDAO.ModeloDAO modeloDAO = new revendaDAO.ModeloDAO();
         cmbModelo.removeAllItems();
-        
-        for(Modelo m : modeloDAO.retornarTodos()){
+
+        for (Modelo m : modeloDAO.retornarTodos()) {
             cmbModelo.addItem(m);
         }
+        this.veiculoController = veiculoController;
     }
 
     /**
@@ -294,34 +298,55 @@ public class CadastroVeiculo extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
 
-       
-       VeiculoController v = new VeiculoController();
-        int tipo;
-        if (rbCarro.isSelected()) {
-            tipo = 1;
-        } else {
-            tipo = 2;
+        
+        Float preco;
+        try {
+            preco = Float.parseFloat(txtPreco.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Preço inválido");
+            return;
         }
-       v.cadastrarVeiculo((int) tipo , (int) cmbNumPortas.getSelectedItem(),txtOpcionais.getText(), 
-               (int) cmbCilindradas.getSelectedItem(), txtEstilo.getText(), 
-               cmbMarca.getSelectedItem(), cmbModelo.getSelectedItem(), Float.parseFloat(txtPreco.getText()), 
-               Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
-       
+        
+        int ano;
+        try {
+            ano = Integer.parseInt(txtPreco.getText());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Ano inválido");
+            return;
+        }
+        
+        
+        if (rbCarro.isSelected()) {
+            veiculoController.cadastrarCarro((int) cmbNumPortas.getSelectedItem(), txtOpcionais.getText(),             
+                (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(), preco,
+                Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
+           
+        } else {
+            veiculoController.cadastrarMoto((int) cmbNumPortas.getSelectedItem(), txtOpcionais.getText(),
+                (int) cmbCilindradas.getSelectedItem(), txtEstilo.getText(),
+                (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(), preco,
+                Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
+        }
+        
+        
+
+        
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void rbCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCarroActionPerformed
-       pnlMoto.setVisible(false);
-       pnlCarro.setVisible(true);
+        pnlMoto.setVisible(false);
+        pnlCarro.setVisible(true);
     }//GEN-LAST:event_rbCarroActionPerformed
 
     private void rbMotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbMotoActionPerformed
-       pnlCarro.setVisible(false);
-       pnlMoto.setVisible(true);
+        pnlCarro.setVisible(false);
+        pnlMoto.setVisible(true);
     }//GEN-LAST:event_rbMotoActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-       pai.setEnabled(true);
-       pai.requestFocus();
+        pai.setEnabled(true);
+        pai.requestFocus();
     }//GEN-LAST:event_formWindowClosed
 
 

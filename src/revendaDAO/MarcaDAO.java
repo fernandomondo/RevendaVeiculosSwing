@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package revendaDAO;
 
 import java.util.ArrayList;
@@ -14,17 +13,14 @@ import revendaModel.Marca;
  * @author Faculdade
  */
 public class MarcaDAO {
-    
-    //ArrayList<Marcas> marcas = new ArrayList<>();
 
+    //ArrayList<Marcas> marcas = new ArrayList<>();
     public ArrayList<Marca> retornarTodas() {
-      
         return new ArrayList<>();
     }
-    
-    
-    
-    
+
+    public Marca retornarPorNome(String marca) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }
