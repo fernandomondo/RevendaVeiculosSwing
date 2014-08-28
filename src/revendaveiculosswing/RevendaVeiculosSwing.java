@@ -6,6 +6,11 @@
 
 package revendaveiculosswing;
 
+import revendaController.VeiculoController;
+import revendaDAO.MarcaDAO;
+import revendaDAO.ModeloDAO;
+import revendaDAO.VeiculoDAO;
+
 /**
  *
  * @author Faculdade
@@ -14,7 +19,11 @@ public class RevendaVeiculosSwing {
 
     
     public static void main(String[] args) {
-        revendaGUI.Principal principal = new revendaGUI.Principal();
+        VeiculoDAO veiculoDAO = new VeiculoDAO();
+        MarcaDAO marcaDAO = new MarcaDAO();
+        ModeloDAO modeloDAO = new ModeloDAO();
+        VeiculoController veiculoController = new VeiculoController(veiculoDAO, marcaDAO, modeloDAO);
+        revendaGUI.Principal principal = new revendaGUI.Principal(veiculoController);
         principal.setVisible(true);
     }
     

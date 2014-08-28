@@ -322,10 +322,9 @@ public class CadastroVeiculo extends javax.swing.JFrame {
                 Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
            
         } else {
-            veiculoController.cadastrarMoto((int) cmbNumPortas.getSelectedItem(), txtOpcionais.getText(),
-                (int) cmbCilindradas.getSelectedItem(), txtEstilo.getText(),
-                (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(), preco,
-                Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
+            veiculoController.cadastrarMoto(txtEstilo.getText(),(int)cmbCilindradas.getSelectedItem(),
+            (String)cmbMarca.getSelectedItem(),(String)cmbModelo.getSelectedItem(),
+            preco, Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
         }
         
         

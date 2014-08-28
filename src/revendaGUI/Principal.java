@@ -5,6 +5,8 @@
  */
 package revendaGUI;
 
+import revendaController.VeiculoController;
+
 /**
  *
  * @author Faculdade
@@ -12,12 +14,15 @@ package revendaGUI;
 public class Principal extends javax.swing.JFrame {
 
     private Object revendaGUI;
+    private final VeiculoController veiculoController;
 
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public Principal(VeiculoController veiculoController) {
+        
         initComponents();
+        this.veiculoController = veiculoController;
     }
 
     /**
@@ -103,7 +108,8 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        revendaGUI.CadastroVeiculo cadVeiculo = new revendaGUI.CadastroVeiculo(this);
+        
+        revendaGUI.CadastroVeiculo cadVeiculo = new revendaGUI.CadastroVeiculo(this, veiculoController);
         cadVeiculo.setVisible(true);
         this.setEnabled(false);
     }//GEN-LAST:event_btnCadastrarActionPerformed
