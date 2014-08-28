@@ -6,6 +6,9 @@
 
 package revendaveiculosswing;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.json.simple.JSONArray;
 import revendaController.VeiculoController;
 import revendaDAO.MarcaDAO;
 import revendaDAO.ModeloDAO;
@@ -16,7 +19,7 @@ import revendaDAO.VeiculoDAO;
  * @author Faculdade
  */
 public class RevendaVeiculosSwing {
-
+    
     
     public static void main(String[] args) {
         VeiculoDAO veiculoDAO = new VeiculoDAO();
