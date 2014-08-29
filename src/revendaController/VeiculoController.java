@@ -5,6 +5,7 @@
  */
 package revendaController;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import revendaDAO.MarcaDAO;
 import revendaDAO.ModeloDAO;
@@ -62,7 +63,7 @@ public class VeiculoController {
         veiculoDao.salvar(veiculo);
     }
 
-    public ArrayList<String> retornarNomeDasMarcas() {
+    public ArrayList<String> retornarNomeDasMarcas() throws IOException {
 
         ArrayList<String> todasMarcas = new ArrayList<>();
 
@@ -72,7 +73,7 @@ public class VeiculoController {
         return todasMarcas;
     }
     
-     public ArrayList<String> retornarNomeDosModelos() {
+     public ArrayList<String> retornarNomeDosModelos() throws IOException {
 
         ArrayList<String> todosModelos = new ArrayList<>();
 

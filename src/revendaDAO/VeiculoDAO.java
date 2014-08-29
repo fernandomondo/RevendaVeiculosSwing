@@ -25,23 +25,10 @@ import revendaModel.Veiculo;
  *
  * @author Faculdade
  */
-public class VeiculoDAO {//fui
+public class VeiculoDAO extends JsonDAO{
 
-    private Path arquivo = Paths.get(System.getProperty("user.dir"), "veiculos.txt");
-
-    private JSONArray getArray() throws IOException {
-
-        if (!Files.exists(arquivo)) {
-            return null;
-        }
-
-        String texto = "";
-        List<String> linhas = Files.readAllLines(arquivo, Charset.defaultCharset());
-        for (String item : linhas) {
-            texto += item;
-        }
-
-        return (JSONArray) JSONValue.parse(texto);
+    public VeiculoDAO() {
+        super("veiculos.txt");
     }
 
     public void salvar(Veiculo veiculo) {

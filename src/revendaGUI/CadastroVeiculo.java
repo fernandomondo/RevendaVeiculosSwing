@@ -5,6 +5,9 @@
  */
 package revendaGUI;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -21,7 +24,7 @@ import revendaModel.Veiculo;
  * @author Faculdade
  */
 public class CadastroVeiculo extends javax.swing.JFrame {
-
+    
     private final JFrame pai;
     private final VeiculoController veiculoController;
 
@@ -29,24 +32,26 @@ public class CadastroVeiculo extends javax.swing.JFrame {
      * Creates new form CadastroVeiculo
      */
     public CadastroVeiculo(JFrame pai, VeiculoController veiculoController) {
-        this.pai = pai;
         initComponents();
-        pnlMoto.setVisible(false);
-
-        revendaDAO.MarcaDAO marcaDAO = new revendaDAO.MarcaDAO();
-        cmbMarca.removeAllItems();
-
-        for (Marca m : marcaDAO.retornarTodas()) {
-            cmbMarca.addItem(m);
-        }
-
-        revendaDAO.ModeloDAO modeloDAO = new revendaDAO.ModeloDAO();
-        cmbModelo.removeAllItems();
-
-        for (Modelo m : modeloDAO.retornarTodos()) {
-            cmbModelo.addItem(m);
-        }
+        
         this.veiculoController = veiculoController;
+        this.pai = pai;
+        
+        pnlMoto.setVisible(false);
+        
+        try {            
+            cmbMarca.removeAllItems();
+            for (String m : veiculoController.retornarNomeDasMarcas()) {
+                cmbMarca.addItem(m);
+            }
+            cmbModelo.removeAllItems();            
+            for (String m : veiculoController.retornarNomeDosModelos()) {
+                cmbModelo.addItem(m);
+            }            
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro.");
+            System.exit(0);
+        }
     }
 
     /**
@@ -297,7 +302,6 @@ public class CadastroVeiculo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
         
         Float preco;
         try {
@@ -315,20 +319,16 @@ public class CadastroVeiculo extends javax.swing.JFrame {
             return;
         }
         
-        
         if (rbCarro.isSelected()) {
-            veiculoController.cadastrarCarro((int) cmbNumPortas.getSelectedItem(), txtOpcionais.getText(),             
-                (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(), preco,
-                Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
-           
+            veiculoController.cadastrarCarro((int) cmbNumPortas.getSelectedItem(), txtOpcionais.getText(),
+                    (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(), preco,
+                    Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
+            
         } else {
-            veiculoController.cadastrarMoto(txtEstilo.getText(),(int)cmbCilindradas.getSelectedItem(),
-            (String)cmbMarca.getSelectedItem(),(String)cmbModelo.getSelectedItem(),
-            preco, Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
+            veiculoController.cadastrarMoto(txtEstilo.getText(), (int) cmbCilindradas.getSelectedItem(),
+                    (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(),
+                    preco, Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
         }
-        
-        
-
         
 
     }//GEN-LAST:event_btnSalvarActionPerformed
