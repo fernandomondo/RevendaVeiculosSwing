@@ -3,12 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package revendaModel;
 
+import org.json.simple.JSONObject;
 
 public class Moto extends Veiculo {
-    
+
+    public Moto(JSONObject o) {
+        super(o);
+    }
+
+    public Moto() {
+    }
+
+    @Override
+    public JSONObject toJsonObject() {
+        JSONObject jSONObject = super.toJsonObject();
+        jSONObject.put("cilindradas", cilindradas);
+        jSONObject.put("estilo", estilo);
+        return jSONObject;
+    }
+
     private int cilindradas;
     private String estilo;
 
@@ -27,11 +42,5 @@ public class Moto extends Veiculo {
     public void setEstilo(String estilo) {
         this.estilo = estilo;
     }
-    
-    @Override
-    public String toString(){
-        return "Marca: " + getMarca().getNome()+ ", Modelo: " + getModelo().getNome() + 
-                ", Ano: " + getAno() + ", Cilindradas: " + getCilindradas() +
-                ", Preço: " + getPreco();
-    }
+
 }

@@ -3,12 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package revendaModel;
 
+import org.json.simple.JSONObject;
 
 public class Carro extends Veiculo {
+
+    public Carro(JSONObject o) {
+        super(o);
+    }
     
+     public Carro() {
+         
+    }
+
+    @Override
+    public JSONObject toJsonObject() {
+        JSONObject jSONObject = super.toJsonObject();
+        jSONObject.put("numPortas", numPortas);
+        jSONObject.put("opcionais", opcionais);
+        return jSONObject;
+    }
+
     private int numPortas;
     private String opcionais;
 
@@ -27,10 +43,10 @@ public class Carro extends Veiculo {
     public void setOpcionais(String opcionais) {
         this.opcionais = opcionais;
     }
-    
+
     @Override
-    public String toString(){
-        return "Marca: " + getMarca().getNome() + ", Modelo: " + getModelo().getNome() + ", Ano: " + getAno() +
-        ", Número de portas: " + getNumPortas() + ", Preço: " + getPreco();
+    public String toString() {
+        return "Marca: " + getMarca().getNome() + ", Modelo: " + getModelo().getNome() + ", Ano: " + getAno()
+                + ", Número de portas: " + getNumPortas() + ", Preço: " + getPreco();
     }
 }

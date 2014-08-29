@@ -59,7 +59,7 @@ public class VeiculoController {
         veiculo.setAno(ano);
         veiculo.setDisponivel(disponivel);
 
-        VeiculoDAO.salvar(veiculo);
+        veiculoDao.salvar(veiculo);
     }
 
     public ArrayList<String> retornarNomeDasMarcas() {
