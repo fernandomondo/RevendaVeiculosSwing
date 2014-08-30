@@ -1,1 +1,1 @@
-[]
+[{"preco":1.99,"opcionais":"dsadsd","tipo":1,"codigo":0,"ano":1978,"codMarca":1,"numPortas":2,"codModelo":1,"disponivel":true},{"preco":1.99,"tipo":2,"codigo":0,"estilo":"muito boa","ano":1985,"codMarca":2,"codModelo":3,"disponivel":true,"cilindradas":250}]

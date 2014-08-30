@@ -24,7 +24,7 @@ import revendaModel.Veiculo;
  * @author Faculdade
  */
 public class CadastroVeiculo extends javax.swing.JFrame {
-    
+
     private final JFrame pai;
     private final VeiculoController veiculoController;
 
@@ -33,21 +33,21 @@ public class CadastroVeiculo extends javax.swing.JFrame {
      */
     public CadastroVeiculo(JFrame pai, VeiculoController veiculoController) {
         initComponents();
-        
+
         this.veiculoController = veiculoController;
         this.pai = pai;
-        
+
         pnlMoto.setVisible(false);
-        
-        try {            
+
+        try {
             cmbMarca.removeAllItems();
             for (String m : veiculoController.retornarNomeDasMarcas()) {
                 cmbMarca.addItem(m);
             }
-            cmbModelo.removeAllItems();            
+            cmbModelo.removeAllItems();
             for (String m : veiculoController.retornarNomeDosModelos()) {
                 cmbModelo.addItem(m);
-            }            
+            }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Ocorreu um erro.");
             System.exit(0);
@@ -182,7 +182,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
 
         jLabel9.setText("Opcionais:");
 
-        cmbNumPortas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2 Portas", "4 Portas" }));
+        cmbNumPortas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2", "4" }));
 
         txtOpcionais.setColumns(20);
         txtOpcionais.setRows(5);
@@ -302,7 +302,7 @@ public class CadastroVeiculo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        
+
         Float preco;
         try {
             preco = Float.parseFloat(txtPreco.getText());
@@ -310,27 +310,36 @@ public class CadastroVeiculo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Preço inválido");
             return;
         }
-        
+
         int ano;
         try {
-            ano = Integer.parseInt(txtPreco.getText());
+            ano = Integer.parseInt(txtAno.getText());
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Ano inválido");
             return;
         }
-        
-        if (rbCarro.isSelected()) {
-            veiculoController.cadastrarCarro((int) cmbNumPortas.getSelectedItem(), txtOpcionais.getText(),
-                    (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(), preco,
-                    Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
-            
-        } else {
-            veiculoController.cadastrarMoto(txtEstilo.getText(), (int) cmbCilindradas.getSelectedItem(),
-                    (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(),
-                    preco, Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
-        }
-        
+        try {
+            if (rbCarro.isSelected()) {
 
+                veiculoController.cadastrarCarro(Integer.parseInt(cmbNumPortas.getSelectedItem().toString()), txtOpcionais.getText(),
+                        (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(), preco,
+                        Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
+
+            } else {
+                veiculoController.cadastrarMoto(txtEstilo.getText(), Integer.parseInt(cmbCilindradas.getSelectedItem().toString()),
+                        (String) cmbMarca.getSelectedItem(), (String) cmbModelo.getSelectedItem(),
+                        preco, Integer.parseInt(txtAno.getText()), ckbDisponivel.isSelected());
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar.");
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
+        txtAno.setText(null);
+        txtEstilo.setText(null);
+        txtOpcionais.setText(null);
+        txtPreco.setText(null);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void rbCarroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCarroActionPerformed

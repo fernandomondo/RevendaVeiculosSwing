@@ -9,8 +9,10 @@ import org.json.simple.JSONObject;
 
 public class Moto extends Veiculo {
 
-    public Moto(JSONObject o) {
-        super(o);
+    public Moto(JSONObject o, Marca marca, Modelo modelo) {
+        super(o, modelo, marca);
+        cilindradas = Integer.parseInt(o.get("cilindradas").toString());
+        estilo = o.get("estilo").toString();
     }
 
     public Moto() {

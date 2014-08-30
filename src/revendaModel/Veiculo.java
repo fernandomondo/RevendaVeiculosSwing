@@ -13,17 +13,18 @@ import org.json.simple.JSONObject;
  */
 public abstract class Veiculo {
 
-    protected Veiculo(JSONObject o) {
-        tipo = (int) o.get("tipo");
-        preco = (float) o.get("preco");
-        ano = (int) o.get("ano");
-        disponivel = (boolean) o.get("disponivel");
-        codigo = (int) o.get("codigo");
-        preco = (float) o.get("preco");
-        //modelo = new Modelo(o.)
+    protected Veiculo(JSONObject o, Modelo modelo, Marca marca) {
+        tipo = Integer.parseInt(o.get("tipo").toString());
+        preco = Float.parseFloat(o.get("preco").toString());
+        ano = Integer.parseInt(o.get("ano").toString());
+        disponivel = Boolean.parseBoolean(o.get("disponivel").toString());
+        codigo = Integer.parseInt(o.get("codigo").toString());
+        preco = Float.parseFloat(o.get("preco").toString());
+        this.modelo =  modelo;
+        this.marca = marca;         
     }
-    
-    protected Veiculo(){
+
+    protected Veiculo() {
     }
 
     public JSONObject toJsonObject() {
@@ -37,9 +38,9 @@ public abstract class Veiculo {
         obj.put("codModelo", modelo.getCodigo());
         return obj;
     }
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return toJsonObject().toJSONString();
     }
 

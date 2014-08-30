@@ -9,12 +9,14 @@ import org.json.simple.JSONObject;
 
 public class Carro extends Veiculo {
 
-    public Carro(JSONObject o) {
-        super(o);
+    public Carro(JSONObject o, Marca marca, Modelo modelo) {
+        super(o, modelo, marca);
+        numPortas = Integer.parseInt(o.get("numPortas").toString());
+        opcionais = o.get("opcionais").toString();                
     }
-    
-     public Carro() {
-         
+
+    public Carro() {
+
     }
 
     @Override

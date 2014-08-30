@@ -22,9 +22,9 @@ public class RevendaVeiculosSwing {
     
     
     public static void main(String[] args) {
-        VeiculoDAO veiculoDAO = new VeiculoDAO();
         MarcaDAO marcaDAO = new MarcaDAO();
-        ModeloDAO modeloDAO = new ModeloDAO();
+        ModeloDAO modeloDAO = new ModeloDAO();        
+        VeiculoDAO veiculoDAO = new VeiculoDAO(modeloDAO, marcaDAO);        
         VeiculoController veiculoController = new VeiculoController(veiculoDAO, marcaDAO, modeloDAO);
         revendaGUI.Principal principal = new revendaGUI.Principal(veiculoController);
         principal.setVisible(true);

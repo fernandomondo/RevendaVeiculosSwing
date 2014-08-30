@@ -52,8 +52,30 @@ public class ModeloDAO extends JsonDAO{
         return modelos;
     }
 
-    public Modelo retornarPorNome(String modelo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Modelo retornarPorNome(String modelo) throws IOException {
+        JSONArray array = this.getArray();
+
+        for (Object object : array) {
+            JSONObject o = (JSONObject) object;
+            Modelo m = new Modelo(o);
+            if (m.getNome().equals(modelo)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    Modelo retornarPorCodigo(int codigo) throws IOException {
+       JSONArray array = this.getArray();
+
+        for (Object object : array) {
+            JSONObject o = (JSONObject) object;
+            Modelo m = new Modelo(o);
+            if (m.getCodigo() == codigo) {
+                return m;
+            }
+        }
+        return null;
     }
     
 }

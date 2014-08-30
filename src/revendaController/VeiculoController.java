@@ -32,7 +32,7 @@ public class VeiculoController {
         this.modeloDAO = modeloDAO;
     }
 
-    public void cadastrarCarro(int numPortas, String opcionais, String marca, String modelo, Float preco, int ano, Boolean disponivel) {
+    public void cadastrarCarro(int numPortas, String opcionais, String marca, String modelo, Float preco, int ano, Boolean disponivel) throws IOException {
         Carro c1 = new Carro();
         c1.setNumPortas(numPortas);
         c1.setOpcionais(opcionais);
@@ -40,7 +40,7 @@ public class VeiculoController {
         terminarDecadastrarVeiculo(c1, ano, marca, modelo, preco, disponivel);
     }
 
-    public void cadastrarMoto(String estilo, int cilindradas, String marca, String modelo, Float preco, int ano, Boolean disponivel) {
+    public void cadastrarMoto(String estilo, int cilindradas, String marca, String modelo, Float preco, int ano, Boolean disponivel) throws IOException {
         Moto m1 = new Moto();
         m1.setCilindradas(cilindradas);
         m1.setEstilo(estilo);
@@ -48,7 +48,7 @@ public class VeiculoController {
         terminarDecadastrarVeiculo(m1, ano, marca, modelo, preco, disponivel);
     }
 
-    private void terminarDecadastrarVeiculo(Veiculo veiculo, int ano, String marca, String modelo, Float preco, Boolean disponivel) {
+    private void terminarDecadastrarVeiculo(Veiculo veiculo, int ano, String marca, String modelo, Float preco, Boolean disponivel) throws IOException {
 
         Marca m = marcaDAO.retornarPorNome(marca);
         veiculo.setMarca(m);
@@ -72,8 +72,8 @@ public class VeiculoController {
         }
         return todasMarcas;
     }
-    
-     public ArrayList<String> retornarNomeDosModelos() throws IOException {
+
+    public ArrayList<String> retornarNomeDosModelos() throws IOException {
 
         ArrayList<String> todosModelos = new ArrayList<>();
 
@@ -81,5 +81,19 @@ public class VeiculoController {
             todosModelos.add(modelo.getNome());
         }
         return todosModelos;
+    }
+
+    public ArrayList<Object[]> retornarDadosVeiculos() throws IOException {
+
+        ArrayList<Object[]> lista = new ArrayList<>();
+        for (Veiculo veiculo : veiculoDao.retornarTodos()) {
+            lista.add(new Object[]{                               
+                veiculo.getCodigo(), veiculo.getMarca().getNome(),
+                veiculo.getModelo().getNome(), veiculo.getAno(), veiculo.getPreco(),
+                veiculo.isDisponivel() ? "Disponivel" : "Indisponível"
+            });
+        }
+
+        return lista;
     }
 }

@@ -15,29 +15,52 @@ import revendaModel.Marca;
  *
  * @author Faculdade
  */
-public class MarcaDAO extends JsonDAO{
+public class MarcaDAO extends JsonDAO {
 
     public MarcaDAO() {
         super("marcas.txt");
-    }    
-    
+    }
+
     //ArrayList<Marcas> marcas = new ArrayList<>();
     public ArrayList<Marca> retornarTodas() throws IOException {
-        
+
         ArrayList<Marca> marcas = new ArrayList<>();
-                
+
         JSONArray array = this.getArray();
-        
+
         for (Object object : array) {
-            JSONObject o = (JSONObject)object;
+            JSONObject o = (JSONObject) object;
             marcas.add(new Marca(o));
-        }       
-        
+        }
+
         return marcas;
     }
 
-    public Marca retornarPorNome(String marca) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Marca retornarPorNome(String marca) throws IOException {
+
+        JSONArray array = this.getArray();
+
+        for (Object object : array) {
+            JSONObject o = (JSONObject) object;
+            Marca m = new Marca(o);
+            if (m.getNome().equals(marca)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    Marca retornarPorCodigo(int codigo) throws IOException {
+        JSONArray array = this.getArray();
+
+        for (Object object : array) {
+            JSONObject o = (JSONObject) object;
+            Marca m = new Marca(o);
+            if (m.getCodigo() == codigo) {
+                return m;
+            }
+        }
+        return null;
     }
 
 }

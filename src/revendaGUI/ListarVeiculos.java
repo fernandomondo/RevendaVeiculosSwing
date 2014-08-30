@@ -5,7 +5,14 @@
  */
 package revendaGUI;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import revendaController.VeiculoController;
 
 /**
  *
@@ -14,13 +21,26 @@ import javax.swing.JFrame;
 public class ListarVeiculos extends javax.swing.JFrame {
 
     private final JFrame pai;
+    private final VeiculoController veiculoController;
 
     /**
      * Creates new form ListarVeiculos
      */
-    public ListarVeiculos(JFrame pai) {
+    public ListarVeiculos(JFrame pai, VeiculoController veiculoController) {
         initComponents();
         this.pai = pai;
+        this.veiculoController = veiculoController;
+        
+        DefaultTableModel model = (DefaultTableModel) tblVeiculos.getModel();
+        model.setNumRows(0);
+        
+        try {
+            for (Object[] object : veiculoController.retornarDadosVeiculos()) {
+                model.addRow(object); 
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Não tem biscoito!");
+        }
     }
 
     /**
@@ -33,7 +53,7 @@ public class ListarVeiculos extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblVeiculos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -42,18 +62,23 @@ public class ListarVeiculos extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVeiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo", "Marca", "Modelo", "Ano", "Preço", "Disponibilidade"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblVeiculos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,6 +108,6 @@ public class ListarVeiculos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblVeiculos;
     // End of variables declaration//GEN-END:variables
 }

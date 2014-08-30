@@ -115,7 +115,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        revendaGUI.ListarVeiculos liVeiculo = new revendaGUI.ListarVeiculos(this);
+        revendaGUI.ListarVeiculos liVeiculo = new revendaGUI.ListarVeiculos(this, veiculoController);
         liVeiculo.setVisible(true);
         this.setEnabled(false);
     }//GEN-LAST:event_btnListarActionPerformed
