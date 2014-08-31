@@ -121,7 +121,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        ExcluirVeiculo exVeiculo = new revendaGUI.ExcluirVeiculo(this);
+        ExcluirVeiculo exVeiculo = new revendaGUI.ExcluirVeiculo(this, veiculoController);
         exVeiculo.setVisible(true);
         this.setEnabled(false);
     }//GEN-LAST:event_btnExcluirActionPerformed

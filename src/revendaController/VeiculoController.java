@@ -87,7 +87,7 @@ public class VeiculoController {
 
         ArrayList<Object[]> lista = new ArrayList<>();
         for (Veiculo veiculo : veiculoDao.retornarTodos()) {
-            lista.add(new Object[]{                               
+            lista.add(new Object[]{
                 veiculo.getCodigo(), veiculo.getMarca().getNome(),
                 veiculo.getModelo().getNome(), veiculo.getAno(), veiculo.getPreco(),
                 veiculo.isDisponivel() ? "Disponivel" : "Indisponível"
@@ -95,5 +95,9 @@ public class VeiculoController {
         }
 
         return lista;
+    }
+
+    public void excluirCarroPorCodigo(int codigo) throws Exception {
+        this.veiculoDao.excluir(codigo);
     }
 }

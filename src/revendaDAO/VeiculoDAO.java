@@ -34,14 +34,17 @@ public class VeiculoDAO extends JsonDAO {
 
     private final ModeloDAO modeloDAO;
     private final MarcaDAO marcaDAO;
+    private int codigo;
 
     public VeiculoDAO(ModeloDAO modeloDAO, MarcaDAO marcaDAO) {
         super("veiculos.txt");
         this.modeloDAO = modeloDAO;
         this.marcaDAO = marcaDAO;
+        codigo = 0;
     }
 
     public void salvar(Veiculo veiculo) {
+        veiculo.setCodigo(codigo++);
         try {
             JSONArray array = getArray();
             array.add(veiculo.toJsonObject());
@@ -74,6 +77,34 @@ public class VeiculoDAO extends JsonDAO {
         }
 
         return veiculos;
+    }
+
+    public void excluir(int codigo) throws Exception {
+        try {
+            JSONArray array = getArray();
+
+            boolean achou = false;
+            for (Object object : array) {
+                JSONObject o = (JSONObject) object;
+
+                if (o.get("codigo").toString().equals(String.valueOf(codigo))) {
+                    array.remove(o);
+                    achou = true;
+                    break;
+                }
+            }
+
+            if (!achou) {
+                throw new Exception("Veiculo não encontrado.");
+            }
+
+            byte[] bytes = array.toJSONString().getBytes();
+            Files.write(arquivo, bytes, StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING,
+                    StandardOpenOption.WRITE);
+        } catch (IOException ex) {
+            //Logger.getLogger(CadastroVeiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
