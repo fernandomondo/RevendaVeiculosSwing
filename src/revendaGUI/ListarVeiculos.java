@@ -3,40 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package revendaGUI;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import revendaController.VeiculoController;
+import revendaController.VeiculoDto;
 
 /**
  *
  * @author Faculdade
  */
-public class ListarVeiculos extends javax.swing.JFrame {
-
+public class ListarVeiculos extends javax.swing.JPanel {
     private final JFrame pai;
     private final VeiculoController veiculoController;
 
     /**
-     * Creates new form ListarVeiculos
+     * Creates new form ListarVeiculos2
      */
     public ListarVeiculos(JFrame pai, VeiculoController veiculoController) {
         initComponents();
         this.pai = pai;
         this.veiculoController = veiculoController;
-        
+              
+
         DefaultTableModel model = (DefaultTableModel) tblVeiculos.getModel();
         model.setNumRows(0);
-        
+
         try {
-            for (Object[] object : veiculoController.retornarDadosVeiculos()) {
-                model.addRow(object); 
+            for (VeiculoDto veiculo : veiculoController.retornarDadosVeiculos()) {
+                model.addRow(new Object[]{veiculo.getCodigo(), veiculo.getNomeMarca(),
+                    veiculo.getNomeModelo(), veiculo.getAno(), veiculo.getPreco(),
+                    veiculo.getSituacao()});
             }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Não tem biscoito!");
@@ -55,13 +56,6 @@ public class ListarVeiculos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblVeiculos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
-        });
-
         tblVeiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -78,10 +72,15 @@ public class ListarVeiculos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblVeiculosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblVeiculos);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -96,14 +95,14 @@ public class ListarVeiculos extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        pai.setEnabled(true);
-        pai.requestFocus();
-    }//GEN-LAST:event_formWindowClosed
+    private void tblVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVeiculosMouseClicked
+        if (evt.getClickCount() == 2) {
+            pai.setContentPane(new CadastroVeiculo(pai, veiculoController, this));
+            pai.revalidate();
+        }
+    }//GEN-LAST:event_tblVeiculosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package revendaGUI;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import revendaController.VeiculoController;
@@ -15,13 +14,12 @@ import revendaController.VeiculoController;
  *
  * @author Faculdade
  */
-public class ExcluirVeiculo extends javax.swing.JFrame {
-    
+public class ExcluirVeiculo extends javax.swing.JPanel {
     private final JFrame pai;
     private final VeiculoController veiculoController;
 
     /**
-     * Creates new form ExcluirVeiculo
+     * Creates new form ExcluirVeiculo2
      */
     public ExcluirVeiculo(JFrame pai, VeiculoController veiculoController) {
         initComponents();
@@ -42,13 +40,6 @@ public class ExcluirVeiculo extends javax.swing.JFrame {
         txtCodigo = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
-            }
-        });
-
         jLabel1.setText("Codigo: ");
 
         txtCodigo.addActionListener(new java.awt.event.ActionListener() {
@@ -64,8 +55,8 @@ public class ExcluirVeiculo extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -87,14 +78,7 @@ public class ExcluirVeiculo extends javax.swing.JFrame {
                     .addComponent(jButton1))
                 .addContainerGap(234, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        pai.setEnabled(true);
-        pai.requestFocus();
-    }//GEN-LAST:event_formWindowClosed
 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
@@ -102,7 +86,7 @@ public class ExcluirVeiculo extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int codigo;
-        
+
         try {
             codigo = Integer.parseInt(txtCodigo.getText());
         } catch (NumberFormatException e) {
@@ -117,7 +101,6 @@ public class ExcluirVeiculo extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(this, "Veículo excluido com sucesso!");
         txtCodigo.setText(null);
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

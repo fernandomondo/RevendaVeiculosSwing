@@ -83,15 +83,15 @@ public class VeiculoController {
         return todosModelos;
     }
 
-    public ArrayList<Object[]> retornarDadosVeiculos() throws IOException {
+    public ArrayList<VeiculoDto> retornarDadosVeiculos() throws IOException {
 
-        ArrayList<Object[]> lista = new ArrayList<>();
+        ArrayList<VeiculoDto> lista = new ArrayList<>();
         for (Veiculo veiculo : veiculoDao.retornarTodos()) {
-            lista.add(new Object[]{
+            lista.add(new VeiculoDto(
                 veiculo.getCodigo(), veiculo.getMarca().getNome(),
                 veiculo.getModelo().getNome(), veiculo.getAno(), veiculo.getPreco(),
                 veiculo.isDisponivel() ? "Disponivel" : "Indisponível"
-            });
+            ));
         }
 
         return lista;
