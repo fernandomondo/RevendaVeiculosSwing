@@ -109,7 +109,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        this.setContentPane(new CadastroVeiculo(this, veiculoController, null));
+        this.setContentPane(new CadastroVeiculo(this, veiculoController, null, 0));
         this.revalidate();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 

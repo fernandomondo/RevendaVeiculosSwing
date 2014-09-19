@@ -9,7 +9,10 @@ import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import revendaController.CarroDto;
+import revendaController.MotoDto;
 import revendaController.VeiculoController;
+import revendaController.VeiculoDto;
 
 /**
  *
@@ -24,7 +27,7 @@ public class CadastroVeiculo extends javax.swing.JPanel {
     /**
      * Creates new form CadastroVeiculo2
      */
-    public CadastroVeiculo(JFrame pai, VeiculoController veiculoController, JPanel queChamou) {
+    public CadastroVeiculo(JFrame pai, VeiculoController veiculoController, JPanel queChamou, int codigoVeiculo) {
         initComponents();
         this.pai = pai;
         this.veiculoController = veiculoController;
@@ -47,6 +50,32 @@ public class CadastroVeiculo extends javax.swing.JPanel {
         }
         this.queChamou = queChamou;
 
+        if (codigoVeiculo != 0) {
+
+            VeiculoDto veiculo = veiculoController.retornarPorCodigo(codigoVeiculo);
+
+            txtAno.setText(String.valueOf(veiculo.getAno()));
+            txtPreco.setText(String.valueOf(veiculo.getPreco()));
+
+            cmbMarca.setSelectedItem(veiculo.getNomeMarca());
+            cmbModelo.setSelectedItem(veiculo.getNomeModelo());
+
+            if (veiculo instanceof CarroDto) {
+                colocarValoresEspecificos((CarroDto) veiculo);
+            } else {
+                colocarValoresEspecificos((MotoDto) veiculo);
+            }
+        }
+    }
+
+    private void colocarValoresEspecificos(CarroDto carro) {
+        cmbNumPortas.setSelectedItem(carro.getNumPortas());
+        txtOpcionais.setText(carro.getOpcionais());
+    }
+
+    private void colocarValoresEspecificos(MotoDto moto) {
+        txtEstilo.setText(moto.getEstilo());
+        cmbCilindradas.setSelectedItem(moto.getCilindradas());
     }
 
     /**

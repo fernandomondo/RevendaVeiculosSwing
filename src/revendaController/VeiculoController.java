@@ -88,9 +88,9 @@ public class VeiculoController {
         ArrayList<VeiculoDto> lista = new ArrayList<>();
         for (Veiculo veiculo : veiculoDao.retornarTodos()) {
             lista.add(new VeiculoDto(
-                veiculo.getCodigo(), veiculo.getMarca().getNome(),
-                veiculo.getModelo().getNome(), veiculo.getAno(), veiculo.getPreco(),
-                veiculo.isDisponivel() ? "Disponivel" : "Indisponível"
+                    veiculo.getCodigo(), veiculo.getMarca().getNome(),
+                    veiculo.getModelo().getNome(), veiculo.getAno(), veiculo.getPreco(),
+                    veiculo.isDisponivel() ? "Disponivel" : "Indisponível"
             ));
         }
 
@@ -99,5 +99,23 @@ public class VeiculoController {
 
     public void excluirCarroPorCodigo(int codigo) throws Exception {
         this.veiculoDao.excluir(codigo);
+    }
+
+    public VeiculoDto retornarPorCodigo(int codigoVeiculo) {
+        Veiculo veiculo = veiculoDao.retornarPorCodigo(codigoVeiculo);
+        if (veiculo instanceof Carro) {
+            Carro carro = (Carro) veiculo;
+            return new CarroDto(
+                    veiculo.getCodigo(), veiculo.getMarca().getNome(),
+                    veiculo.getModelo().getNome(), veiculo.getAno(), veiculo.getPreco(),
+                    veiculo.isDisponivel() ? "Disponivel" : "Indisponível", carro.getNumPortas(), carro.getOpcionais()
+            );
+        } else {
+            Moto moto = (Moto) veiculo;
+            return new MotoDto(
+                    veiculo.getCodigo(), veiculo.getMarca().getNome(),
+                    veiculo.getModelo().getNome(), veiculo.getAno(), veiculo.getPreco(),
+                    veiculo.isDisponivel() ? "Disponivel" : "Indisponível", moto.getEstilo(), moto.getCilindradas());
+        }
     }
 }

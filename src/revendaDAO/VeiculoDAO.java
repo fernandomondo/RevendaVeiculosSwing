@@ -12,6 +12,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import revendaController.VeiculoDto;
 import revendaModel.Carro;
 import revendaModel.Marca;
 import revendaModel.Modelo;
@@ -32,11 +33,10 @@ public class VeiculoDAO extends JsonDAO {
         super("veiculos.txt");
         this.modeloDAO = modeloDAO;
         this.marcaDAO = marcaDAO;
-        codigo = 0;
+        codigo = retornarUltimoCodigo() + 1;
     }
 
     public void salvar(Veiculo veiculo) {
-        
         veiculo.setCodigo(codigo++);
         try {
             JSONArray array = getArray();
@@ -100,4 +100,34 @@ public class VeiculoDAO extends JsonDAO {
         }
     }
 
+    public Veiculo retornarPorCodigo(int codigoVeiculo) {
+        try {
+            JSONArray array = this.getArray();
+
+            for (Object object : array) {
+                JSONObject o = (JSONObject) object;
+
+                Marca marca = marcaDAO.retornarPorCodigo(Integer.parseInt(o.get("codMarca").toString()));
+                Modelo modelo = modeloDAO.retornarPorCodigo(Integer.parseInt(o.get("codModelo").toString()));
+
+                if (o.get("tipo").toString().equals("1")) {
+                    return new Carro(o, marca, modelo);
+                } else {
+                    return new Moto(o, marca, modelo);
+                }
+            }
+        } catch (IOException ex) {
+            //Logger.getLogger(CadastroVeiculo.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+        return null;
+    }
+
+    private int retornarUltimoCodigo() {
+        try {
+            ArrayList<Veiculo> veiculos = retornarTodos();
+            return veiculos.get(veiculos.size() - 1).getCodigo();
+        } catch (IOException ex) {
+            return 0;
+        }
+    }
 }

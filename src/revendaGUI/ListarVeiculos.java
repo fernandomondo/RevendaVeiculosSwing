@@ -27,9 +27,7 @@ public class ListarVeiculos extends javax.swing.JPanel {
     public ListarVeiculos(JFrame pai, VeiculoController veiculoController) {
         initComponents();
         this.pai = pai;
-        this.veiculoController = veiculoController;
-              
-
+        this.veiculoController = veiculoController;              
         DefaultTableModel model = (DefaultTableModel) tblVeiculos.getModel();
         model.setNumRows(0);
 
@@ -99,7 +97,9 @@ public class ListarVeiculos extends javax.swing.JPanel {
 
     private void tblVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVeiculosMouseClicked
         if (evt.getClickCount() == 2) {
-            pai.setContentPane(new CadastroVeiculo(pai, veiculoController, this));
+            int numRow = tblVeiculos.getSelectedRow();
+            int idVeiculo = (int) tblVeiculos.getModel().getValueAt(numRow, 0);            
+            pai.setContentPane(new CadastroVeiculo(pai, veiculoController, this, idVeiculo));
             pai.revalidate();
         }
     }//GEN-LAST:event_tblVeiculosMouseClicked

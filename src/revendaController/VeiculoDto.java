@@ -50,5 +50,4 @@ public class VeiculoDto {
     public String getSituacao() {
         return situacao;
     }
-
 }
